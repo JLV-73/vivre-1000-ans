@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IA & Longévité — Vivre 1000 Ans | JLV Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: rgba(201,168,76,0.15);
+    --dark: #0A0A0F;
+    --dark2: #111118;
+    --dark3: #1A1A24;
+    --dark4: #222232;
+    --text: #E8E8F0;
+    --text-muted: #9090A8;
+    --accent-blue: #4A9EFF;
+    --accent-green: #3ECFA0;
+    --accent-red: #FF5A5A;
+    --accent-orange: #FF8C42;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px 40px;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #1a1428 0%, var(--dark) 70%);
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity:0.5;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+  @keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  .hero-orb {
+    position:absolute; border-radius:50%;
+    filter: blur(80px);
+    animation: orbFloat 12s ease-in-out infinite alternate;
+  }
+  .orb1 { width:400px; height:400px; background:rgba(201,168,76,0.08); top:-100px; left:-100px; }
+  .orb2 { width:300px; height:300px; background:rgba(74,158,255,0.06); bottom:-50px; right:-50px; animation-delay:-4s; }
+  .orb3 { width:200px; height:200px; background:rgba(62,207,160,0.05); top:40%; right:10%; animation-delay:-8s; }
+  @keyframes orbFloat { from{transform:translate(0,0) scale(1)} to{transform:translate(30px,20px) scale(1.1)} }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--gold-pale); border:1px solid rgba(201,168,76,0.3);
+    border-radius:100px; padding:6px 16px;
+    font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color:var(--gold);
+    margin-bottom:24px; position:relative; z-index:1;
+    animation: fadeInUp 0.8s ease both;
+  }
+  .badge-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero h1 {
+    font-family:'Playfair Display',serif;
+    font-size: clamp(2.4rem, 8vw, 5.5rem);
+    font-weight:900; line-height:1.1;
+    position:relative; z-index:1;
+    animation: fadeInUp 0.8s 0.2s ease both;
+  }
+  .hero h1 em {
+    font-style:italic; color:var(--gold);
+    display:block;
+  }
+  .hero-sub {
+    font-size:clamp(0.95rem,2.5vw,1.15rem);
+    color:var(--text-muted); max-width:620px;
+    margin:20px auto 0; position:relative; z-index:1;
+    animation: fadeInUp 0.8s 0.4s ease both;
+  }
+  .hero-meta {
+    display:flex; gap:32px; margin-top:40px;
+    flex-wrap:wrap; justify-content:center;
+    position:relative; z-index:1;
+    animation: fadeInUp 0.8s 0.6s ease both;
+  }
+  .meta-item { text-align:center; }
+  .meta-val { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--gold); }
+  .meta-lbl { font-size:0.7rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-muted); margin-top:2px; }
+  .hero-scroll {
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);
+    animation: fadeIn 2s 1s ease both;
+  }
+  .scroll-line { width:1px; height:40px; background:linear-gradient(var(--gold),transparent); animation: scrollLine 2s ease-in-out infinite; }
+  @keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1)} 100%{transform:scaleY(0);transform-origin:bottom} }
+  @keyframes fadeInUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  /* ── NAV ── */
+  nav {
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,10,15,0.92); backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(201,168,76,0.15);
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  nav::-webkit-scrollbar { display:none; }
+  .nav-inner {
+    display:flex; gap:0; min-width:max-content;
+    padding:0 16px;
+  }
+  nav a {
+    color:var(--text-muted); text-decoration:none;
+    font-size:0.7rem; letter-spacing:1px; text-transform:uppercase;
+    padding:14px 16px; display:block;
+    border-bottom:2px solid transparent;
+    transition:all 0.2s; white-space:nowrap;
+  }
+  nav a:hover { color:var(--gold); border-bottom-color:var(--gold); }
+  .jlv-logo {
+    font-family:'Playfair Display',serif; font-weight:900;
+    font-size:1rem; color:var(--gold);
+    padding:14px 16px; border-right:1px solid rgba(201,168,76,0.15);
+    flex-shrink:0;
+  }
+
+  /* ── LAYOUT ── */
+  main { max-width:900px; margin:0 auto; padding:0 20px 80px; }
+  section { padding:60px 0 20px; }
+  section + section { border-top:1px solid rgba(255,255,255,0.06); }
+
+  /* ── SECTION TITLES ── */
+  .section-header { margin-bottom:36px; }
+  .section-num {
+    font-family:'DM Mono',monospace; font-size:0.7rem;
+    color:var(--gold); letter-spacing:3px; text-transform:uppercase;
+    margin-bottom:8px; display:block;
+  }
+  h2 {
+    font-family:'Playfair Display',serif;
+    font-size:clamp(1.8rem,5vw,2.8rem); font-weight:700;
+    line-height:1.15; color:var(--text);
+  }
+  h2 em { color:var(--gold); font-style:italic; }
+  h3 {
+    font-family:'Playfair Display',serif;
+    font-size:1.3rem; font-weight:700;
+    color:var(--text); margin:32px 0 12px;
+  }
+  p { margin-bottom:16px; color:var(--text-muted); }
+  strong { color:var(--text); font-weight:500; }
+
+  /* ── LEAD BOX ── */
+  .lead {
+    font-size:1.1rem; color:var(--text);
+    line-height:1.8; margin-bottom:32px;
+    padding:24px 28px; border-left:3px solid var(--gold);
+    background:var(--gold-pale); border-radius:0 8px 8px 0;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+  @media(max-width:600px){ .cards { grid-template-columns:1fr; } }
+  .card {
+    background:var(--dark3); border:1px solid rgba(255,255,255,0.07);
+    border-radius:12px; padding:24px;
+    transition:transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { transform:translateY(-2px); border-color:rgba(201,168,76,0.3); }
+  .card-icon { font-size:1.8rem; margin-bottom:12px; }
+  .card h4 { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; margin-bottom:8px; }
+  .card p { font-size:0.9rem; margin:0; }
+
+  /* ── STAT BOXES ── */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin:28px 0; }
+  .stat {
+    background:var(--dark3); border:1px solid rgba(255,255,255,0.07);
+    border-radius:10px; padding:20px 16px; text-align:center;
+  }
+  .stat-val {
+    font-family:'Playfair Display',serif;
+    font-size:2rem; font-weight:900; color:var(--gold);
+    line-height:1;
+  }
+  .stat-lbl { font-size:0.72rem; color:var(--text-muted); margin-top:6px; letter-spacing:0.5px; }
+
+  /* ── CHART SVG ── */
+  .chart-wrap {
+    background:var(--dark3); border:1px solid rgba(255,255,255,0.07);
+    border-radius:12px; padding:28px 20px; margin:28px 0;
+    overflow:hidden;
+  }
+  .chart-title {
+    font-family:'DM Mono',monospace; font-size:0.72rem;
+    letter-spacing:2px; text-transform:uppercase; color:var(--gold);
+    margin-bottom:20px; text-align:center;
+  }
+  svg.chart { width:100%; height:auto; overflow:visible; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; margin:28px 0; }
+  table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+  th {
+    background:var(--dark4); color:var(--gold);
+    font-family:'DM Mono',monospace; font-size:0.68rem;
+    letter-spacing:1.5px; text-transform:uppercase;
+    padding:12px 16px; text-align:left; border-bottom:2px solid rgba(201,168,76,0.3);
+  }
+  td { padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.05); color:var(--text-muted); }
+  tr:hover td { background:rgba(255,255,255,0.02); color:var(--text); }
+  .badge {
+    display:inline-block; padding:2px 10px; border-radius:100px;
+    font-size:0.7rem; font-weight:500;
+  }
+  .badge-green { background:rgba(62,207,160,0.15); color:var(--accent-green); border:1px solid rgba(62,207,160,0.3); }
+  .badge-blue { background:rgba(74,158,255,0.15); color:var(--accent-blue); border:1px solid rgba(74,158,255,0.3); }
+  .badge-orange { background:rgba(255,140,66,0.15); color:var(--accent-orange); border:1px solid rgba(255,140,66,0.3); }
+  .badge-red { background:rgba(255,90,90,0.15); color:var(--accent-red); border:1px solid rgba(255,90,90,0.3); }
+
+  /* ── QUOTE ── */
+  .quote {
+    position:relative; margin:32px 0;
+    padding:28px 32px;
+    background:linear-gradient(135deg, var(--dark3) 0%, var(--dark4) 100%);
+    border-radius:12px; border:1px solid rgba(201,168,76,0.2);
+  }
+  .quote::before {
+    content:'\201C'; font-family:'Playfair Display',serif;
+    font-size:5rem; color:var(--gold); opacity:0.3;
+    position:absolute; top:-10px; left:20px; line-height:1;
+  }
+  .quote p { font-size:1.05rem; color:var(--text); font-style:italic; margin:0 0 12px; }
+  .quote cite { font-size:0.78rem; color:var(--gold); font-style:normal; letter-spacing:1px; }
+
+  /* ── IMAGE PLACEHOLDER ── */
+  .img-block {
+    border-radius:12px; overflow:hidden;
+    margin:28px 0; position:relative;
+  }
+  .img-caption {
+    font-size:0.75rem; color:var(--text-muted);
+    text-align:center; margin-top:10px; font-style:italic;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { margin:28px 0; }
+  .tl-item { display:flex; gap:20px; padding:0 0 28px; position:relative; }
+  .tl-item:last-child { padding-bottom:0; }
+  .tl-left { flex-shrink:0; display:flex; flex-direction:column; align-items:center; }
+  .tl-dot { width:12px; height:12px; border-radius:50%; background:var(--gold); flex-shrink:0; margin-top:4px; }
+  .tl-line { flex:1; width:1px; background:linear-gradient(var(--gold),rgba(201,168,76,0.1)); margin-top:4px; }
+  .tl-year { font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--gold); white-space:nowrap; margin-top:4px; margin-bottom:6px; }
+  .tl-content h4 { font-size:0.95rem; font-weight:500; color:var(--text); margin-bottom:4px; }
+  .tl-content p { font-size:0.85rem; color:var(--text-muted); margin:0; }
+
+  /* ── CRITICS / PROS ── */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+  @media(max-width:600px){ .two-col { grid-template-columns:1fr; } }
+  .pro-box, .con-box {
+    border-radius:10px; padding:20px;
+  }
+  .pro-box { background:rgba(62,207,160,0.08); border:1px solid rgba(62,207,160,0.2); }
+  .con-box { background:rgba(255,90,90,0.08); border:1px solid rgba(255,90,90,0.2); }
+  .pro-box h4 { color:var(--accent-green); margin-bottom:10px; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; }
+  .con-box h4 { color:var(--accent-red); margin-bottom:10px; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; }
+  .pro-box li, .con-box li { font-size:0.88rem; color:var(--text-muted); margin-bottom:8px; margin-left:16px; }
+
+  /* ── JLV OPINION BOX ── */
+  .jlv-box {
+    background:linear-gradient(135deg, #1a1428 0%, #0f1020 100%);
+    border:2px solid var(--gold); border-radius:16px;
+    padding:32px; margin:32px 0; position:relative; overflow:hidden;
+  }
+  .jlv-box::before {
+    content:'JLV'; position:absolute; right:-10px; top:-20px;
+    font-family:'Playfair Display',serif; font-size:8rem; font-weight:900;
+    color:var(--gold); opacity:0.05; line-height:1;
+  }
+  .jlv-label {
+    font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:3px;
+    text-transform:uppercase; color:var(--gold); margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .jlv-label::before { content:''; width:24px; height:1px; background:var(--gold); }
+  .jlv-box p { font-size:0.97rem; color:var(--text); margin-bottom:12px; }
+
+  /* ── CONCLUSION ── */
+  .conclusion {
+    background:radial-gradient(ellipse 100% 80% at 50% 100%, rgba(201,168,76,0.08) 0%, transparent 70%),
+    var(--dark3);
+    border:1px solid rgba(201,168,76,0.2); border-radius:16px;
+    padding:40px 32px; margin:32px 0; text-align:center;
+  }
+  .conclusion h3 { font-size:1.6rem; color:var(--gold); margin:0 0 20px; }
+  .conclusion p { max-width:640px; margin:0 auto 16px; }
+
+  /* ── SOURCES ── */
+  .sources-list { list-style:none; margin:0; }
+  .sources-list li {
+    padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.05);
+    font-size:0.82rem; color:var(--text-muted);
+    display:flex; gap:12px; align-items:baseline;
+  }
+  .src-num { font-family:'DM Mono',monospace; color:var(--gold); flex-shrink:0; font-size:0.7rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align:center; padding:40px 20px;
+    border-top:1px solid rgba(255,255,255,0.06);
+    font-family:'DM Mono',monospace; font-size:0.7rem;
+    color:var(--text-muted); letter-spacing:1px;
+  }
+  footer span { color:var(--gold); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap { margin:12px 0; }
+  .pb-label { display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:5px; }
+  .pb-label span:first-child { color:var(--text); }
+  .pb-label span:last-child { color:var(--gold); font-family:'DM Mono',monospace; }
+  .pb { height:6px; background:rgba(255,255,255,0.07); border-radius:100px; overflow:hidden; }
+  .pb-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(24px); transition:all 0.6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ── PILL TAGS ── */
+  .tags { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+  .tag {
+    padding:4px 12px; border-radius:100px; font-size:0.72rem;
+    background:var(--dark4); border:1px solid rgba(255,255,255,0.1);
+    color:var(--text-muted);
+  }
+
+  /* Charts avec Chart.js → on va faire pure SVG à la main */
+  .bar-chart-svg { font-family:'DM Sans',sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+
+  <div class="hero-badge"><span class="badge-dot"></span>Rapport Expert JLV · Mai 2026</div>
+  <h1>Vivre <em>1000 Ans</em></h1>
+  <p class="hero-sub">L'Intelligence Artificielle peut-elle réellement vaincre la mort ? Analyse complète, données, critiques et vision prospective.</p>
+
+  <div class="hero-meta">
+    <div class="meta-item"><div class="meta-val">$600Md</div><div class="meta-lbl">Marché Longevity 2026</div></div>
+    <div class="meta-item"><div class="meta-val">+50%</div><div class="meta-lbl">Espérance de vie en 200 ans</div></div>
+    <div class="meta-item"><div class="meta-val">2032</div><div class="meta-lbl">Pause du vieillissement (Kurzweil)</div></div>
+    <div class="meta-item"><div class="meta-val">120k</div><div class="meta-lbl">Morts/jour liées à l'âge</div></div>
+  </div>
+
+  <div class="hero-scroll"><div class="scroll-line"></div>Défiler</div>
+</header>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <div class="jlv-logo">JLV</div>
+    <a href="#intro">Intro</a>
+    <a href="#mecanismes">Mécanismes IA</a>
+    <a href="#acteurs">Acteurs</a>
+    <a href="#marche">Marché</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#critiques">Critiques</a>
+    <a href="#comparatif">Comparatif</a>
+    <a href="#opinion">Mon Avis</a>
+    <a href="#conclusion">Conclusion</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════ -->
+<main>
+
+<!-- ── 0. INTRO ── -->
+<section id="intro">
+  <div class="section-header reveal">
+    <span class="section-num">01 — Contexte</span>
+    <h2>La <em>rupture</em> est déjà en cours</h2>
+  </div>
+
+  <div class="lead reveal">
+    En 200 ans, l'espérance de vie humaine a quasiment doublé — de 40 ans en 1824 à près de 80 ans aujourd'hui. Cette révolution s'est faite sans l'IA, grâce aux vaccins, antibiotiques et à la chirurgie moderne. La vraie question : l'IA peut-elle désormais <strong>comprimer en une décennie ce qui nous a pris deux siècles ?</strong>
+  </div>
+
+  <p class="reveal">Laurent Alexandre, co-auteur de <em>Vivre 1000 ans</em> (Buchet-Chastel, 2026), avec Alexandre Tsicopoulos (25 ans, entrepreneur Gen Z), pose une double rupture civilisationnelle sans précédent : <strong>la mort optionnelle</strong> couplée à <strong>l'obsolescence cognitive humaine</strong>. Ce rapport analyse si cette vision relève de la science, de la prophétie ou de la chimère.</p>
+
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-val">~40</div><div class="stat-lbl">Espérance de vie 1824 (USA)</div></div>
+    <div class="stat"><div class="stat-val">~80</div><div class="stat-lbl">Espérance de vie 2025</div></div>
+    <div class="stat"><div class="stat-val">160</div><div class="stat-lbl">Promesse des maîtres de l'IA dès 2035</div></div>
+    <div class="stat"><div class="stat-val">1000</div><div class="stat-lbl">Horizon ultime transhumaniste</div></div>
+  </div>
+
+  <div class="chart-wrap reveal">
+    <div class="chart-title">Évolution de l'espérance de vie mondiale — Et projections IA (années)</div>
+    <svg viewBox="0 0 700 250" class="chart bar-chart-svg">
+      <!-- Axes -->
+      <line x1="60" y1="220" x2="680" y2="220" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="60" y1="20" x2="60" y2="220" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <!-- Y labels -->
+      <text x="50" y="224" fill="#9090A8" font-size="10" text-anchor="end">0</text>
+      <text x="50" y="175" fill="#9090A8" font-size="10" text-anchor="end">40</text>
+      <text x="50" y="125" fill="#9090A8" font-size="10" text-anchor="end">80</text>
+      <text x="50" y="75" fill="#9090A8" font-size="10" text-anchor="end">120</text>
+      <text x="50" y="25" fill="#9090A8" font-size="10" text-anchor="end">160</text>
+      <!-- Grilles -->
+      <line x1="60" y1="175" x2="680" y2="175" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="60" y1="125" x2="680" y2="125" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="60" y1="75" x2="680" y2="75" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <!-- Ligne historique -->
+      <polyline points="80,175 180,170 280,155 380,125 440,118" fill="none" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Ligne projection conservatrice -->
+      <polyline points="440,118 520,105 600,90 680,78" fill="none" stroke="#4A9EFF" stroke-width="2" stroke-dasharray="6,4"/>
+      <!-- Ligne projection optimiste IA -->
+      <polyline points="440,118 480,95 520,70 560,45 600,28 640,22" fill="none" stroke="#3ECFA0" stroke-width="2" stroke-dasharray="4,3"/>
+      <!-- Points historiques -->
+      <circle cx="80" cy="175" r="5" fill="#C9A84C"/>
+      <circle cx="180" cy="170" r="5" fill="#C9A84C"/>
+      <circle cx="280" cy="155" r="5" fill="#C9A84C"/>
+      <circle cx="380" cy="125" r="5" fill="#C9A84C"/>
+      <circle cx="440" cy="118" r="6" fill="#C9A84C"/>
+      <!-- Labels X -->
+      <text x="80" y="238" fill="#9090A8" font-size="9" text-anchor="middle">1824</text>
+      <text x="180" y="238" fill="#9090A8" font-size="9" text-anchor="middle">1900</text>
+      <text x="280" y="238" fill="#9090A8" font-size="9" text-anchor="middle">1950</text>
+      <text x="380" y="238" fill="#9090A8" font-size="9" text-anchor="middle">2000</text>
+      <text x="440" y="238" fill="#9090A8" font-size="9" text-anchor="middle">2025</text>
+      <text x="600" y="238" fill="#4A9EFF" font-size="9" text-anchor="middle">2040</text>
+      <!-- Zone projection -->
+      <rect x="440" y="20" width="240" height="200" fill="rgba(201,168,76,0.03)" rx="2"/>
+      <text x="560" y="15" fill="rgba(201,168,76,0.5)" font-size="9" text-anchor="middle">← PROJECTIONS →</text>
+      <!-- Légende -->
+      <line x1="80" y1="205" x2="100" y2="205" stroke="#C9A84C" stroke-width="2"/>
+      <text x="104" y="208" fill="#9090A8" font-size="9">Historique réel</text>
+      <line x1="200" y1="205" x2="220" y2="205" stroke="#4A9EFF" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="224" y="208" fill="#9090A8" font-size="9">Projection conservative</text>
+      <line x1="370" y1="205" x2="390" y2="205" stroke="#3ECFA0" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="394" y="208" fill="#9090A8" font-size="9">Projection optimiste IA</text>
+    </svg>
+  </div>
+
+  <p class="reveal">La "vitesse d'évasion de la mortalité" — concept clé — se définit simplement : <strong>si la science gagne plus d'une année de vie par an vécu, on entre dans une boucle théoriquement infinie.</strong> Selon Aubrey de Grey (chercheur en longévité), nous en serions à moins de 25 ans de ce point de bascule.</p>
+</section>
+
+<!-- ── 1. MÉCANISMES ── -->
+<section id="mecanismes">
+  <div class="section-header reveal">
+    <span class="section-num">02 — Science & Technologie</span>
+    <h2>Comment l'IA <em>attaque</em> le vieillissement</h2>
+  </div>
+
+  <p class="reveal">Le vieillissement n'est pas une fatalité biologique — c'est un processus de dégradation multi-systémique que l'IA peut maintenant modéliser, anticiper et contrecarrer à une échelle impossible pour l'intelligence humaine seule.</p>
+
+  <div class="cards reveal">
+    <div class="card">
+      <div class="card-icon">🧬</div>
+      <h4>Reprogrammation cellulaire</h4>
+      <p>Les facteurs de Yamanaka permettent de "remettre à zéro" l'horloge épigénétique des cellules vieillissantes. L'IA (GPT-4b micro d'OpenAI) optimise ces protéines pour multiplier par 50 l'efficacité du processus.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💊</div>
+      <h4>Sénolytiques IA-guidés</h4>
+      <p>Les cellules sénescentes ("cellules zombies") empoisonnent les tissus voisins. L'IA de Unity Biotechnology et Rubedo Life identifie des molécules ciblant sélectivement ces cellules, sans toucher les cellules saines.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <h4>Découverte de médicaments</h4>
+      <p>AlphaFold 3 (DeepMind) a résolu en 2024 la structure de 200 millions de protéines, ouvrant la voie à des traitements anti-âge ciblant des mécanismes jamais explorés auparavant.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h4>Médecine prédictive</h4>
+      <p>L'IA détecte les cancers, maladies cardiovasculaires et Alzheimer des années avant les symptômes cliniques — transformant la médecine réactive en médecine préventive à l'échelle individuelle.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔗</div>
+      <h4>Télomères & NAD+</h4>
+      <p>L'IA modélise le raccourcissement des télomères et les déficits en NAD+ (coenzyme clé de l'énergie cellulaire), identifiant des protocoles de supplémentation et de thérapie génique ultra-personnalisés.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h4>Jumeaux numériques biologiques</h4>
+      <p>Des copies virtuelles du métabolisme humain permettent de tester des milliers d'interventions thérapeutiques en simulation avant tout essai clinique, réduisant les délais de R&D de 10 ans à 2-3 ans.</p>
+    </div>
+  </div>
+
+  <div class="quote reveal">
+    <p>L'IA pourrait doubler l'espérance de vie humaine en seulement cinq ans. Une fois que les humains atteindront 150 ans, notre espèce pourrait atteindre une « vitesse d'évasion » de la mortalité.</p>
+    <cite>— Dario Amodei, PDG Anthropic</cite>
+  </div>
+
+  <h3 class="reveal">Les mécanismes biologiques du vieillissement ciblés par l'IA</h3>
+  <div class="chart-wrap reveal">
+    <div class="chart-title">Avancement de la recherche IA par mécanisme (indice de maturité 0→100)</div>
+    <div style="padding:8px 0;">
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Diagnostic précoce de maladies</span><span>87</span></div>
+        <div class="pb"><div class="pb-fill" style="width:87%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Découverte de médicaments assistée</span><span>74</span></div>
+        <div class="pb"><div class="pb-fill" style="width:74%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Modélisation protéines (AlphaFold)</span><span>91</span></div>
+        <div class="pb"><div class="pb-fill" style="width:91%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Sénolytiques IA-guidés</span><span>52</span></div>
+        <div class="pb"><div class="pb-fill" style="width:52%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Reprogrammation cellulaire (essais humains)</span><span>28</span></div>
+        <div class="pb"><div class="pb-fill" style="width:28%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Nanobots médicaux in vivo</span><span>12</span></div>
+        <div class="pb"><div class="pb-fill" style="width:12%"></div></div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="pb-label"><span>Upload neural / conscience numérique</span><span>3</span></div>
+        <div class="pb"><div class="pb-fill" style="width:3%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. ACTEURS ── -->
+<section id="acteurs">
+  <div class="section-header reveal">
+    <span class="section-num">03 — Écosystème</span>
+    <h2>Les <em>géants</em> de la longévité</h2>
+  </div>
+
+  <p class="reveal">La convergence entre les milliardaires de la Tech, les géants de l'IA et les biotechs de pointe crée un écosystème inédit. Jamais autant d'argent et de cerveaux n'avaient été concentrés sur un seul objectif : vaincre la mort.</p>
+
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Acteur</th>
+          <th>Fondateurs / Soutien</th>
+          <th>Approche principale</th>
+          <th>Financement</th>
+          <th>Stade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Altos Labs</strong></td>
+          <td>Jeff Bezos, Yuri Milner</td>
+          <td>Reprogrammation cellulaire épigénétique</td>
+          <td>$3 milliards</td>
+          <td><span class="badge badge-blue">Essais humains 2026</span></td>
+        </tr>
+        <tr>
+          <td><strong>Calico (Alphabet)</strong></td>
+          <td>Larry Page, Sergey Brin</td>
+          <td>Mécanismes moléculaires du vieillissement</td>
+          <td>$1,5 Md+</td>
+          <td><span class="badge badge-orange">R&D avancée</span></td>
+        </tr>
+        <tr>
+          <td><strong>Retro Biosciences</strong></td>
+          <td>Sam Altman ($180M)</td>
+          <td>Autophagie + reprogrammation</td>
+          <td>$1 Md prévu</td>
+          <td><span class="badge badge-green">Phase 1 — Alzheimer</span></td>
+        </tr>
+        <tr>
+          <td><strong>Insilico Medicine</strong></td>
+          <td>Alex Zhavoronkov</td>
+          <td>IA drug discovery (Pharma.AI)</td>
+          <td>$400M+</td>
+          <td><span class="badge badge-green">Phase 2 en cours</span></td>
+        </tr>
+        <tr>
+          <td><strong>Unity Biotechnology</strong></td>
+          <td>Peter Thiel, Jeff Bezos</td>
+          <td>Sénolytiques (cellules zombies)</td>
+          <td>$500M+</td>
+          <td><span class="badge badge-green">Phase 2 DME</span></td>
+        </tr>
+        <tr>
+          <td><strong>OpenAI × Retro Bio</strong></td>
+          <td>Sam Altman</td>
+          <td>GPT-4b micro — facteurs Yamanaka ×50</td>
+          <td>Partenariat 2024</td>
+          <td><span class="badge badge-blue">Préclinique</span></td>
+        </tr>
+        <tr>
+          <td><strong>DeepMind / AlphaFold</strong></td>
+          <td>Google / Demis Hassabis</td>
+          <td>Structure de 200M protéines</td>
+          <td>Alphabet</td>
+          <td><span class="badge badge-green">Déployé (2024)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Juvenescence</strong></td>
+          <td>Ro5 AI platform intégré</td>
+          <td>Fibroses, métabolisme, gènes</td>
+          <td>$76M Series B</td>
+          <td><span class="badge badge-orange">Phase 2 prévue 2026</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap reveal">
+    <div class="chart-title">Financement Longevity Biotech — Montants annuels (Mds $)</div>
+    <svg viewBox="0 0 660 200" class="chart">
+      <!-- fond -->
+      <rect x="60" y="10" width="580" height="160" fill="none"/>
+      <!-- grilles -->
+      <line x1="60" y1="170" x2="640" y2="170" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+      <line x1="60" y1="130" x2="640" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="60" y1="90" x2="640" y2="90" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="60" y1="50" x2="640" y2="50" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <line x1="60" y1="10" x2="640" y2="10" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <!-- Y labels -->
+      <text x="52" y="173" fill="#9090A8" font-size="9" text-anchor="end">0</text>
+      <text x="52" y="133" fill="#9090A8" font-size="9" text-anchor="end">2.5</text>
+      <text x="52" y="93" fill="#9090A8" font-size="9" text-anchor="end">5</text>
+      <text x="52" y="53" fill="#9090A8" font-size="9" text-anchor="end">7.5</text>
+      <text x="52" y="13" fill="#9090A8" font-size="9" text-anchor="end">10</text>
+      <!-- Barres  (scale: 160px = 10 Mds) -->
+      <!-- 2021: 1.5Md → 24px -->
+      <rect x="80" y="146" width="60" height="24" rx="4" fill="rgba(201,168,76,0.6)"/>
+      <text x="110" y="240" fill="#9090A8" font-size="9" text-anchor="middle">2021</text>
+      <!-- 2022: 3.5Md → 56px -->
+      <rect x="175" y="114" width="60" height="56" rx="4" fill="rgba(201,168,76,0.7)"/>
+      <text x="205" y="240" fill="#9090A8" font-size="9" text-anchor="middle">2022</text>
+      <!-- 2023: 4.2Md → 67px -->
+      <rect x="270" y="103" width="60" height="67" rx="4" fill="rgba(201,168,76,0.8)"/>
+      <text x="300" y="240" fill="#9090A8" font-size="9" text-anchor="middle">2023</text>
+      <!-- 2024: 8.5Md → 136px -->
+      <rect x="365" y="34" width="60" height="136" rx="4" fill="var(--gold)"/>
+      <text x="395" y="240" fill="#9090A8" font-size="9" text-anchor="middle">2024</text>
+      <!-- 2025: 9.5Md → 152px (proj) -->
+      <rect x="460" y="18" width="60" height="152" rx="4" fill="rgba(62,207,160,0.6)"/>
+      <text x="490" y="240" fill="#3ECFA0" font-size="9" text-anchor="middle">2025*</text>
+      <!-- 2026 proj: 11Md → 176 mais limité -->
+      <rect x="555" y="10" width="60" height="160" rx="4" fill="rgba(74,158,255,0.4)"/>
+      <text x="585" y="240" fill="#4A9EFF" font-size="9" text-anchor="middle">2026*</text>
+      <!-- Valeurs -->
+      <text x="110" y="140" fill="white" font-size="9" text-anchor="middle" font-weight="bold">$1.5</text>
+      <text x="205" y="108" fill="white" font-size="9" text-anchor="middle" font-weight="bold">$3.5</text>
+      <text x="300" y="97" fill="white" font-size="9" text-anchor="middle" font-weight="bold">$4.2</text>
+      <text x="395" y="28" fill="white" font-size="9" text-anchor="middle" font-weight="bold">$8.5</text>
+      <text x="490" y="12" fill="white" font-size="9" text-anchor="middle" font-weight="bold">~$9.5</text>
+      <text x="585" y="8" fill="#4A9EFF" font-size="8" text-anchor="middle">proj.</text>
+      <!-- axe X labels position corrigée -->
+      <text x="110" y="185" fill="#9090A8" font-size="9" text-anchor="middle">2021</text>
+      <text x="205" y="185" fill="#9090A8" font-size="9" text-anchor="middle">2022</text>
+      <text x="300" y="185" fill="#9090A8" font-size="9" text-anchor="middle">2023</text>
+      <text x="395" y="185" fill="#9090A8" font-size="9" text-anchor="middle">2024</text>
+      <text x="490" y="185" fill="#3ECFA0" font-size="9" text-anchor="middle">2025*</text>
+      <text x="585" y="185" fill="#4A9EFF" font-size="9" text-anchor="middle">2026*</text>
+      <text x="490" y="196" fill="#9090A8" font-size="8" text-anchor="middle">estim.</text>
+      <text x="585" y="196" fill="#9090A8" font-size="8" text-anchor="middle">estim.</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ── 3. MARCHÉ ── -->
+<section id="marche">
+  <div class="section-header reveal">
+    <span class="section-num">04 — Économie</span>
+    <h2>Un marché de <em>$600 milliards</em></h2>
+  </div>
+
+  <div class="lead reveal">
+    Le marché global de la longévité est estimé à <strong>$600 milliards en 2026</strong>, englobant biotech, médecine régénérative, IA de découverte pharmaceutique et wellness de haute gamme. Il devrait dépasser <strong>$1 500 milliards d'ici 2035.</strong>
+  </div>
+
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-val">$23Md</div><div class="stat-lbl">Longevity Biotech 2026</div></div>
+    <div class="stat"><div class="stat-val">+11%</div><div class="stat-lbl">CAGR annuel</div></div>
+    <div class="stat"><div class="stat-val">$85Md</div><div class="stat-lbl">Marché anti-aging global 2025</div></div>
+    <div class="stat"><div class="stat-val">$120Md</div><div class="stat-lbl">Projections 2030</div></div>
+  </div>
+
+  <p class="reveal">Les coûts de santé liés au vieillissement représentent déjà entre <strong>8% et 18% du PIB</strong> dans les pays de l'OCDE. Avec les baby-boomers atteignant 80 ans en masse, sans révolution technologique, les systèmes de santé nationaux s'effondreront. L'IA n'est pas un luxe : c'est une nécessité économique.</p>
+
+  <div class="chart-wrap reveal">
+    <div class="chart-title">Répartition du marché Longevity 2026 par segment</div>
+    <svg viewBox="0 0 500 240" class="chart">
+      <!-- Camembert simplifié sous forme de segments -->
+      <!-- On fait un donut chart SVG -->
+      <g transform="translate(160,120)">
+        <!-- Biotech 35% -->
+        <path d="M0,0 L0,-100 A100,100 0 0,1 86.6,-50 Z" fill="#C9A84C" opacity="0.85"/>
+        <!-- Médicaments 25% -->
+        <path d="M0,0 L86.6,-50 A100,100 0 0,1 86.6,50 Z" fill="#4A9EFF" opacity="0.85"/>
+        <!-- IA drug discovery 20% -->
+        <path d="M0,0 L86.6,50 A100,100 0 0,1 -50,86.6 Z" fill="#3ECFA0" opacity="0.85"/>
+        <!-- Régénératif 12% -->
+        <path d="M0,0 L-50,86.6 A100,100 0 0,1 -100,0 Z" fill="#FF8C42" opacity="0.85"/>
+        <!-- Autres 8% -->
+        <path d="M0,0 L-100,0 A100,100 0 0,1 0,-100 Z" fill="#FF5A5A" opacity="0.85"/>
+        <!-- Trou central -->
+        <circle cx="0" cy="0" r="55" fill="#111118"/>
+        <text x="0" y="-6" fill="#C9A84C" font-size="14" text-anchor="middle" font-family="Playfair Display" font-weight="bold">$600</text>
+        <text x="0" y="12" fill="#9090A8" font-size="9" text-anchor="middle">Milliards</text>
+      </g>
+      <!-- Légende -->
+      <rect x="290" y="40" width="12" height="12" rx="2" fill="#C9A84C"/>
+      <text x="308" y="51" fill="#9090A8" font-size="10">Biotech 35%</text>
+      <rect x="290" y="62" width="12" height="12" rx="2" fill="#4A9EFF"/>
+      <text x="308" y="73" fill="#9090A8" font-size="10">Médicaments 25%</text>
+      <rect x="290" y="84" width="12" height="12" rx="2" fill="#3ECFA0"/>
+      <text x="308" y="95" fill="#9090A8" font-size="10">IA drug discovery 20%</text>
+      <rect x="290" y="106" width="12" height="12" rx="2" fill="#FF8C42"/>
+      <text x="308" y="117" fill="#9090A8" font-size="10">Médecine régénérative 12%</text>
+      <rect x="290" y="128" width="12" height="12" rx="2" fill="#FF5A5A"/>
+      <text x="308" y="139" fill="#9090A8" font-size="10">Autres (wellness, IA) 8%</text>
+    </svg>
+  </div>
+
+  <div class="tags reveal">
+    <span class="tag">Longevity Stocks</span>
+    <span class="tag">ARKG ETF</span>
+    <span class="tag">GLNG ETF</span>
+    <span class="tag">Senolytics</span>
+    <span class="tag">Epigenetic clock</span>
+    <span class="tag">NAD+ therapies</span>
+    <span class="tag">GLP-1 convergence</span>
+    <span class="tag">mRNA platform</span>
+  </div>
+</section>
+
+<!-- ── 4. TIMELINE ── -->
+<section id="timeline">
+  <div class="section-header reveal">
+    <span class="section-num">05 — Chronologie</span>
+    <h2>La <em>feuille de route</em> vers 1000 ans</h2>
+  </div>
+
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-year">2024</div>
+        <div class="tl-content">
+          <h4>AlphaFold 3 — 200 millions de protéines résolues</h4>
+          <p>DeepMind résout la structure de 200M protéines humaines. OpenAI + Retro Bio lancent GPT-4b micro pour les facteurs Yamanaka. Altos Labs publie une étude landmark sur la prolongation de vie chez la souris.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-year">2025</div>
+        <div class="tl-content">
+          <h4>Premiers essais humains anti-âge cliniques</h4>
+          <p>Retro Biosciences dose le premier patient humain (RTR242, Alzheimer). Insilico Medicine entre en Phase 2. Altos Labs nomme un CMO (chef médical) signalant la transition vers l'humain. Financement du secteur dépasse $9 milliards.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-year">2026–2028</div>
+        <div class="tl-content">
+          <h4>Multiplication des essais phase 2–3</h4>
+          <p>Résultats cliniques attendus pour les sénolytiques de Unity Biotech. Premiers médicaments IA-discovered proches d'approbation FDA pour maladies liées à l'âge. L'AGI (IA générale) potentiellement disponible, accélérant massivement la R&D.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-year">2030</div>
+        <div class="tl-content">
+          <h4>Espérance de vie à 160 ans — promesse des IA masters</h4>
+          <p>Horizon revendiqué par Laurent Alexandre et certains dirigeants tech. Dario Amodei (Anthropic) projette un doublement de l'espérance de vie d'ici 2030. Ray Kurzweil prédit la "pause du vieillissement" grâce aux nanobots.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div>
+        <div class="tl-year">2032</div>
+        <div class="tl-content">
+          <h4>Kurzweil : nanobots médicaux & sauvegarde cérébrale</h4>
+          <p>Prédiction controversée de Ray Kurzweil : des nanobots circulent dans nos artères, réparant les dommages cellulaires en temps réel. Le téléchargement de conscience devient une discussion sérieuse (mais techniquement infime).</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-left"><div class="tl-dot"></div></div>
+      <div>
+        <div class="tl-year">2035–2050+</div>
+        <div class="tl-content">
+          <h4>"Vitesse d'évasion" et mort optionnelle</h4>
+          <p>Si la recherche gagne plus d'1 an de vie par an, théoriquement la mort naturelle devient optionnelle. Au-delà de ce point, la biologie entre dans un territoire totalement inconnu. Scénario ultra-optimiste : certains humains nés aujourd'hui pourraient vivre 150–200+ ans.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. CRITIQUES ── -->
+<section id="critiques">
+  <div class="section-header reveal">
+    <span class="section-num">06 — Analyse Critique</span>
+    <h2>Entre <em>promesses</em> et réalités</h2>
+  </div>
+
+  <p class="reveal">Toute révolution génère ses prophètes et ses sceptiques. La question de la longévité radicale n'échappe pas à cette règle. Une analyse honnête doit intégrer les deux versants.</p>
+
+  <div class="two-col reveal">
+    <div class="pro-box">
+      <h4>✓ Arguments pour</h4>
+      <ul>
+        <li>AlphaFold a déjà résolu en 18 mois ce que 50 ans de cristallographie n'avaient pas achevé</li>
+        <li>Des médicaments ont prolongé la vie de souris de +50% en laboratoire</li>
+        <li>L'IA compresse les délais de R&D de 10 ans à 2-3 ans</li>
+        <li>Des certaines espèces (tortues de mer) ne vieillissent pas biologiquement</li>
+        <li>La reprogrammation cellulaire fonctionne sur des organes isolés de souris</li>
+        <li>$8,5 milliards investis en 2024 seuls — masse critique atteinte</li>
+      </ul>
+    </div>
+    <div class="con-box">
+      <h4>✗ Arguments contre</h4>
+      <ul>
+        <li>Aucun médicament anti-âge n'a encore prouvé son efficacité sur l'humain sain</li>
+        <li>Les promesses de Kurzweil en 2010 ne se sont pas réalisées à l'échéance prévue</li>
+        <li>La biologie humaine est d'une complexité sans commune mesure avec les modèles actuels</li>
+        <li>Le risque de cancer lors de la reprogrammation cellulaire reste non résolu</li>
+        <li>Les délais FDA et EMA restent incompressibles (7–12 ans pour un médicament)</li>
+        <li>Les inégalités d'accès pourraient créer une caste d'immortels ultra-riches</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="reveal">Le problème éthique fondamental</h3>
+  <p class="reveal">Le philosophe Bernard Stiegler avait anticipé le risque : sans régulation, l'absence de contrôle mènerait à <strong>"une forme de néo-darwinisme socioéconomique entre ceux qui pourront vivre éternellement et les autres."</strong> Ce n'est pas une dystopie de science-fiction — c'est une question politique urgente.</p>
+
+  <div class="cards reveal">
+    <div class="card">
+      <div class="card-icon">⚖️</div>
+      <h4>Fracture biologique</h4>
+      <p>Aux inégalités d'accès à la santé s'ajouterait une fracture biologique entre "augmentés" et "naturels" — une rupture anthropologique sans précédent dans l'histoire humaine.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏛️</div>
+      <h4>Effondrement sociétal</h4>
+      <p>Comment fonctionnent la retraite, les héritages, la démocratie et les générations quand certains vivent 300 ans ? Les modèles socioéconomiques actuels sont totalement inadaptés.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌍</div>
+      <h4>Surpopulation & ressources</h4>
+      <p>Si l'espérance de vie double sans effondrement de la natalité, la Terre devra supporter 20-25 milliards d'humains. La pression sur les ressources serait cataclysmique.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧬</div>
+      <h4>Identité et sens de la vie</h4>
+      <p>Que reste-t-il de l'ambition, de la créativité, de l'urgence existentielle quand la mort n'est plus une échéance ? Certains philosophes estiment que notre finitude est le moteur de notre humanité.</p>
+    </div>
+  </div>
+
+  <div class="quote reveal">
+    <p>Vouloir supprimer la souffrance, la vieillesse, la dépendance ou la mort n'est pas seulement irréaliste : c'est nier ce qui fait notre humanité.</p>
+    <cite>— Position bioconservatrice, Gènéthique</cite>
+  </div>
+</section>
+
+<!-- ── 6. COMPARATIF ── -->
+<section id="comparatif">
+  <div class="section-header reveal">
+    <span class="section-num">07 — Comparatif</span>
+    <h2>Scénarios à <em>horizon 2040</em></h2>
+  </div>
+
+  <div class="table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Scénario</th>
+          <th>Espérance de vie 2040</th>
+          <th>Probabilité</th>
+          <th>Condition clé</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Statu quo</strong></td>
+          <td>85–90 ans</td>
+          <td>15%</td>
+          <td>IA reste cosmétique en médecine</td>
+          <td><span class="badge badge-orange">Peu probable</span></td>
+        </tr>
+        <tr>
+          <td><strong>Évolution incrémentale</strong></td>
+          <td>90–100 ans</td>
+          <td>40%</td>
+          <td>Quelques médicaments IA approuvés</td>
+          <td><span class="badge badge-blue">Scénario de base</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rupture modérée</strong></td>
+          <td>100–120 ans</td>
+          <td>35%</td>
+          <td>Sénolytiques + reprogrammation validés humains</td>
+          <td><span class="badge badge-green">Optimiste réaliste</span></td>
+        </tr>
+        <tr>
+          <td><strong>Rupture radicale</strong></td>
+          <td>120–160+ ans</td>
+          <td>8%</td>
+          <td>AGI + nanomédecine déployées</td>
+          <td><span class="badge badge-orange">Spéculatif</span></td>
+        </tr>
+        <tr>
+          <td><strong>Vivre 1000 ans</strong></td>
+          <td>Illimité théorique</td>
+          <td>2%</td>
+          <td>Vitesse d'évasion + conscience numérique</td>
+          <td><span class="badge badge-red">Ultra-spéculatif</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap reveal">
+    <div class="chart-title">Probabilité d'occurrence par scénario (estimation JLV, mai 2026)</div>
+    <svg viewBox="0 0 600 160" class="chart">
+      <!-- Statu quo -->
+      <rect x="20" y="20" width="75" height="120" rx="6" fill="rgba(255,140,66,0.5)"/>
+      <text x="57" y="105" fill="white" font-size="12" text-anchor="middle" font-weight="bold">15%</text>
+      <text x="57" y="155" fill="#9090A8" font-size="9" text-anchor="middle">Statu quo</text>
+      <!-- Incrémental -->
+      <rect x="120" y="20" width="200" height="120" rx="6" fill="rgba(74,158,255,0.5)"/>
+      <text x="220" y="75" fill="white" font-size="18" text-anchor="middle" font-weight="bold">40%</text>
+      <text x="220" y="155" fill="#9090A8" font-size="9" text-anchor="middle">Évolution incrémentale</text>
+      <!-- Rupture modérée -->
+      <rect x="340" y="20" width="175" height="120" rx="6" fill="rgba(62,207,160,0.5)"/>
+      <text x="427" y="80" fill="white" font-size="16" text-anchor="middle" font-weight="bold">35%</text>
+      <text x="427" y="155" fill="#9090A8" font-size="9" text-anchor="middle">Rupture modérée</text>
+      <!-- Étiquettes -->
+      <text x="20" y="14" fill="#FF8C42" font-size="8">Peu probable</text>
+      <text x="120" y="14" fill="#4A9EFF" font-size="8">Scénario de base</text>
+      <text x="340" y="14" fill="#3ECFA0" font-size="8">Optimiste réaliste</text>
+      <!-- 8+2% en légende -->
+      <text x="520" y="80" fill="#9090A8" font-size="9" text-anchor="middle">+8% rupture radicale</text>
+      <text x="520" y="95" fill="#9090A8" font-size="9" text-anchor="middle">+2% «1000 ans»</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ── 7. MON AVIS ── -->
+<section id="opinion">
+  <div class="section-header reveal">
+    <span class="section-num">08 — Analyse JLV</span>
+    <h2>Mon <em>avis</em></h2>
+  </div>
+
+  <div class="jlv-box reveal">
+    <div class="jlv-label">Jean-Louis VIRETTI — Ambassadeur Technologique & Investisseur</div>
+
+    <p>Je suis un ingénieur de formation, passionné d'IA depuis longtemps. Et je dois être honnête : <strong>le titre "Vivre 1000 ans" est du marketing brillant, mais la réalité est plus nuancée — et tout aussi fascinante.</strong></p>
+
+    <p><strong>Ce qui est réel et déjà là :</strong> l'IA accélère la recherche médicale d'une façon que nous sous-estimons collectivement. AlphaFold n'est pas un gadget — c'est une révolution comparable à la découverte de la double hélice d'ADN. Les investissements atteignent une masse critique. Des entreprises comme Insilico Medicine sont en Phase 2 avec des molécules que l'IA a entièrement conçues. C'est nouveau, c'est réel, c'est transformateur.</p>
+
+    <p><strong>Ce qui me semble exagéré :</strong> les prophéties de Dario Amodei sur le doublement de l'espérance de vie d'ici 2030, ou celles de Kurzweil sur les nanobots en 2032. La biologie humaine est d'une complexité fractaliste que même les meilleurs LLMs peinent à modéliser. Les essais cliniques restent chronophages par nécessité éthique, pas par inefficacité.</p>
+
+    <p><strong>Ma conviction d'investisseur :</strong> le secteur Longevity est une thèse d'investissement solide à 15-20 ans. Pas pour vivre 1000 ans — mais parce que vieillir en bonne santé plus longtemps est une demande sociétale irréfutable, les financements sont massifs, et l'IA comprime réellement les délais de découverte. Les ETF ARKG, GLNG et les positions ciblées sur Insilico Medicine, Unity Biotech et Altos Labs (pré-IPO) méritent attention.</p>
+
+    <p><strong>Sur le livre de Laurent Alexandre :</strong> c'est un excellent livre-débat. Le format intergénérationnel est pertinent. Laurent pose les bonnes questions de façon provocatrice. Alexandre Tsicopoulos représente honnêtement l'anxiété de sa génération. Mais il faut le lire comme une provocation philosophique utile, pas comme un manuel de biologie.</p>
+
+    <p><strong>Ma conclusion personnelle :</strong> Non, nous ne vivrons pas 1000 ans. Mais nous vivrons peut-être 120 ans en pleine forme grâce à l'IA — et c'est déjà une révolution anthropologique sans précédent. <em>La vraie question n'est pas "combien d'années ?" mais "comment ?"</em></p>
+  </div>
+</section>
+
+<!-- ── 8. CONCLUSION ── -->
+<section id="conclusion">
+  <div class="section-header reveal">
+    <span class="section-num">09 — Synthèse</span>
+    <h2>La <em>conclusion</em></h2>
+  </div>
+
+  <div class="conclusion reveal">
+    <h3>L'IA ne nous rendra pas immortels.<br>Elle va réinventer ce que "vieillir" signifie.</h3>
+    <p>La révolution de la longévité n'est pas une utopie transhumaniste réservée aux milliardaires de la Silicon Valley. Elle est déjà en marche dans les laboratoires d'Altos Labs, les serveurs d'OpenAI et les algorithmes d'AlphaFold.</p>
+    <p>La mort restera — probablement — une réalité pour encore plusieurs générations. Mais <strong>mourir en bonne santé à 110 ans plutôt qu'en déclin à 75</strong>, c'est une révolution silencieuse que l'IA va rendre possible dans les 20 prochaines années.</p>
+    <p>Le vrai défi n'est pas technologique — il est philosophique, économique et politique. <strong>Qui aura accès à ces thérapies ? Comment réorganiser nos sociétés ?</strong> Voilà les questions que Laurent Alexandre pose avec courage, et que nous aurions tort d'éluder.</p>
+  </div>
+
+  <div class="cards reveal">
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <h4>À surveiller absolument</h4>
+      <p>Résultats Phase 2 d'Insilico Medicine (2026), essais humains Altos Labs, et les premières publications sur GPT-4b micro × facteurs Yamanaka.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📈</div>
+      <h4>Pour l'investisseur</h4>
+      <p>Thèse solide sur 15-20 ans. ETF ARKG, GLNG. Positions ciblées sur Unity (UBX), Insilico, Juvenescence pré-IPO. Horizon de patience requis.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📚</div>
+      <h4>À lire pour aller plus loin</h4>
+      <p>"Vivre 1000 ans" — L. Alexandre & A. Tsicopoulos. "La mort de la mort" — Laurent Alexandre (2011). "The Singularity Is Nearer" — Ray Kurzweil (2024).</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h4>Signal le plus fort de 2025</h4>
+      <p>Le financement Longevity Biotech a plus que doublé de 2023 à 2024 ($4.2Md → $8.5Md). La masse critique est atteinte. Ce n'est plus de la science-fiction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOURCES ── -->
+<section id="sources">
+  <div class="section-header reveal">
+    <span class="section-num">10 — Bibliographie</span>
+    <h2>Sources <em>& références</em></h2>
+  </div>
+
+  <ul class="sources-list reveal">
+    <li><span class="src-num">[01]</span>Laurent Alexandre & Alexandre Tsicopoulos — <em>Vivre 1000 ans</em>, Buchet-Chastel, 2026</li>
+    <li><span class="src-num">[02]</span>Research and Markets — <em>Longevity BioTech Market Report 2026</em> ($20.9Md → $23.2Md, CAGR 11%)</li>
+    <li><span class="src-num">[03]</span>Scispot Blog — <em>Top 20 Most Innovative Longevity Biotechs 2026</em> (marché $600Md estimé)</li>
+    <li><span class="src-num">[04]</span>Atlantico.fr — Interview Laurent Alexandre, mai 2026</li>
+    <li><span class="src-num">[05]</span>Labiotech.eu — <em>11 anti-aging biotech companies leading longevity in 2026</em></li>
+    <li><span class="src-num">[06]</span>AInvest — <em>AI-Driven Biotech Innovation and Longevity</em>, déc. 2025</li>
+    <li><span class="src-num">[07]</span>Innovant.fr — <em>L'IA va ralentir le vieillissement humain</em>, mai 2025</li>
+    <li><span class="src-num">[08]</span>Sciencepost.fr — <em>Dario Amodei : l'IA pourrait doubler l'espérance de vie</em>, mars 2026</li>
+    <li><span class="src-num">[09]</span>TrustMyScience — <em>OpenAI crée GPT-4b micro pour la recherche longévité</em>, avr. 2025</li>
+    <li><span class="src-num">[10]</span>Gabelli Research — <em>The Longevity Boom: Opportunities in Anti-Aging</em>, 2025</li>
+    <li><span class="src-num">[11]</span>AltStreet Investments — <em>Longevity Biotech Investment Guide</em>, nov. 2025</li>
+    <li><span class="src-num">[12]</span>Cairn.info — <em>La quête de l'immortalité et l'utopie du transhumanisme</em></li>
+    <li><span class="src-num">[13]</span>Gènéthique — <em>Transhumanisme : quels risques pour demain ?</em></li>
+    <li><span class="src-num">[14]</span>MIT AgeLab / Oxford Gerontology — <em>AI in the Longevity Economy</em>, 2025</li>
+    <li><span class="src-num">[15]</span>DeepMind / Nature — AlphaFold 3, 200M protein structures, 2024</li>
+  </ul>
+</section>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>Rapport rédigé par <span>Jean-Louis VIRETTI</span> — Ambassadeur Technologique & Investisseur</p>
+  <p style="margin-top:6px;font-size:0.6rem;opacity:0.5">© 2026 JLV Intelligence Reports · Toutes données issues de sources publiques · Non contractuel · Usage personnel</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin:'0px 0px -40px 0px' });
+  reveals.forEach(r => io.observe(r));
+
+  // Active nav
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if(window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#'+current ? 'var(--gold)' : '';
+      a.style.borderBottomColor = a.getAttribute('href') === '#'+current ? 'var(--gold)' : 'transparent';
+    });
+  }, {passive:true});
+</script>
+</body>
+</html>
